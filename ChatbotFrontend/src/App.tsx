@@ -1,9 +1,13 @@
+// Hooks React
 import { useState } from "react";
+// Hooks owns
+import usePregunta from "./hooks/Pregunta";
+// components
 import { Body } from "./componentes/Body";
 import  Head  from "./componentes/Head";
 import { Input } from "./componentes/Input";
 import  VisibleInvicible from "./componentes/VisibleInvicible";
-import usePregunta from "./hooks/Pregunta";
+
 function App() {
   
   const [visible, setVisible] = useState("invisible");
