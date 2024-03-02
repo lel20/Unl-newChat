@@ -1,38 +1,53 @@
+import { PulseLoader} from "react-spinners";
 import { useEffect, useRef } from "react";
-interface Props {
-  recibirPregunta: string[];
+import { Mensaje } from "../hooks/Pregunta";
+interface Chat {
+  mensaje: Mensaje[]; // Prop mensajes tipificada como un array de objetos Mensaje
+  respondiendo: boolean;
 }
-export const Body: React.FC<Props>= ({ recibirPregunta}) => {
-  const mesajeReferencia= useRef<HTMLDivElement>(null)
-  const scrollBotton=()=>{
-    if(mesajeReferencia.current){
-      mesajeReferencia.current.scrollIntoView({behavior:'smooth'})
+const estilo = "p-2 py-2 bg-slate-200 max-w-[80%] rounded-e-xl rounded-bl-xl";
+export const Body = ({ mensaje, respondiendo }: Chat) => {
+  console.log(respondiendo);
+  const mesajeReferencia = useRef<HTMLDivElement>(null);
+  const scrollBotton = () => {
+    if (mesajeReferencia.current) {
+      mesajeReferencia.current.scrollIntoView({ behavior: "smooth" });
     }
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     scrollBotton();
-  },[recibirPregunta])
+  }, [mensaje]);
   return (
-    <>
-      <div className="overflow-auto  h-[75%] md:h-[75%] bg-white rounded-t-2xl py-4 flex flex-col p-5">
-        <div className="w-full flex justify-start mb-4">
-          <div className="ps-4 py-2 bg-slate-200 max-w-[80%] rounded-e-xl rounded-bl-xl">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis,
-            minima vero. Id tempora temporibus voluptas natus facilis earum!
-            Rerum consectetur debitis, amet porro sequi impedit corporis ut
-            quasi ab corrupti. .
-          </div>
-        </div>
-
-        {recibirPregunta.map((re, index) => (
-          re &&
-          <div ref={mesajeReferencia} key={index} className="w-full flex justify-end mb-4">
-            <div className=" right-0 rounded-s-xl rounded-tr-xl bg-[#0c2342] max-w-[80%] p-2 py-2 text-gray-200">
-              {re}
+    <div className="overflow-auto h-[75%] md:h-[75%] bg-white rounded-t-2xl py-4 flex flex-col p-5">
+      {mensaje.map((respuesta, index) => (
+        <div
+          key={index}
+          className={`w-full flex justify-${respuesta.emisor === "chat" ? "start" : "end"} mb-4`}
+        >
+          {respuesta.emisor === "chat" ? (
+            <div 
+             ref={mesajeReferencia}
+             className={estilo}>{respuesta.texto}</div>
+          ) : (
+            <div
+              ref={mesajeReferencia}
+              className="right-0 rounded-s-xl rounded-tr-xl bg-[#0c2342] max-w-[80%] p-2 py-2 text-gray-200"
+            >
+              {respuesta.texto}
             </div>
-          </div>
-        ))}
-      </div>
-    </>
+          )}
+        </div>
+      ))}
+      {mensaje.length > 0 && respondiendo && (
+        <div className="py-4 rounded-e-xl rounded-bl-xl">
+          <PulseLoader
+            color="#364ad6"
+            loading
+            size={10}
+            speedMultiplier={1}
+          />
+        </div>
+      )}
+    </div>
   );
 };

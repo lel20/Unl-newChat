@@ -1,31 +1,50 @@
-interface ControlPreguntas {
-  mensaje: string;
+import {  useState } from "react";
+
+export interface Mensaje {
+  texto: string;
+  emisor: "chat" | "usuario";
 }
-import { useState } from "react";
 
 export default function usePregunta(props: {
   valor: boolean;
   pregunta: string;
 }) {
-  const [enviarPregunta, setEnviarPregunta] = useState<ControlPreguntas[]>([]);
-  const handleClick1 = async() => {
+  const [mensaje, setMensaje] = useState<Mensaje[]>([]);
+  const [respondendo, setRespondiendo]=useState(true)
+  const handleClick1 = async () => {
     if (props.valor) {
-      const nevaPregunta: ControlPreguntas = { mensaje: props.pregunta };
-      setEnviarPregunta([...enviarPregunta, nevaPregunta]);
-      if (nevaPregunta.mensaje.trim() !== "") {
+      setRespondiendo(true)
+      const nuevaPregunta: Mensaje = {
+        texto: props.pregunta,
+        emisor: "usuario",
+      };
+      setMensaje((prevMensajes) => [...prevMensajes, nuevaPregunta]);
+      if (nuevaPregunta.texto.trim() !== "") {
         const requestOptions = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ mensaje: nevaPregunta })
+          body: JSON.stringify({ mensaje: nuevaPregunta }),
         };
-      await fetch("http://127.0.0.1:8000/pregunta/", requestOptions)
+        
+        const respuesta = await fetch(
+          "http://127.0.0.1:8000/pregunta/",
+          requestOptions
+        );
+        const dato = await respuesta.json();
+        const newRespuesta: Mensaje = { texto: dato.mensaje, emisor: "chat" };
+        setMensaje((prevMensajes) => [...prevMensajes, newRespuesta]);
+        setRespondiendo(false);
+        
       }
     } else {
       return;
     }
   };
+  
+
   return {
     handleClick1,
-    enviarPregunta,
+    mensaje,
+    respondendo
   };
 }

@@ -9,7 +9,7 @@ function App() {
   const [visible, setVisible] = useState("invisible");
   const[botonvisible, setBotonVisible]= useState('visible')
   const[pregunta, setPregunta]=useState("")
-  const{handleClick1, enviarPregunta} =usePregunta({valor:true, pregunta})
+  const{handleClick1, mensaje, respondendo} =usePregunta({valor:true, pregunta})
   
   const handleChanged=(e:React.FormEvent<HTMLInputElement>)=>{
     setPregunta(e.currentTarget.value)
@@ -28,15 +28,15 @@ function App() {
   return (
     <>
       <div
-        className={`${visible} h-[100%] md:container bg-[#0c2342]  md:h-[80%] border md:w-[400px] absolute z-20 md:right-10 md:rounded-xl md:mt-2 font-roboto text-sm`}
+        className={`${visible} h-full w-full md:container bg-[#0c2342]  md:h-[80%] border md:w-[400px] absolute z-20 md:right-10 md:rounded-xl md:mt-2 font-roboto text-sm`}
       >
         <Head 
           handleClick={handleClick}
           visible={botonvisible} 
         />
         <Body 
-          recibirPregunta={enviarPregunta.map(pre=> pre.mensaje)}
-          
+          mensaje={mensaje} 
+          respondiendo={respondendo}
         /> 
         <Input 
           handleChanged={handleChanged}
