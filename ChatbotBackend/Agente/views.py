@@ -5,7 +5,7 @@ import json
 
 def index(request):
     return JsonResponse({"message": "¡Bienvenido a la página de inicio!"})
-@csrf_exempt
+@csrf_exempt 
 def recibirMensaje(request):
   if request.method=='POST':
     datos= json.loads(request.body)

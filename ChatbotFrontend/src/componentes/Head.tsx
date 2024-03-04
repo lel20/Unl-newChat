@@ -1,8 +1,10 @@
-
 import UNL from '/Logo-UNL.svg'
 import Arrown from '/arrown.svg'
-export default function Head(props:{handleClick:()=>void,visible:string}){
-  {props.visible.replace('invisible','visible')}
+
+interface HeadProps {
+  handleClick: () => void;
+}
+export  const Head=({handleClick}:HeadProps)=>{
   return (
     <>
       <div className="flex w-full h-[20%] items-center p-5 text-slate-50 gap-x-4">
@@ -11,7 +13,7 @@ export default function Head(props:{handleClick:()=>void,visible:string}){
           <h2 className="">Posgrados Chat</h2>
           <p>Asistente de posgrados</p>
         </div>
-         <button onClick={props.handleClick}><img src={Arrown} alt="arrown" /></button>
+         <button onClick={handleClick}><img src={Arrown} alt="arrown" /></button>
       </div>
     </>
   );
