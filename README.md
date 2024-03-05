@@ -19,7 +19,7 @@ El siguiente proyecto consiste en la elaboración de un prototipo de Agente Conv
 
 
 ## 🛠 Skills
-Javascript, HTML, CSS, Python, Django, React, Vie, Git, Github, Tailwind, Bert, Pytorch, Colab, Json
+Javascript, HTML, CSS, Python, Django, React, Vite, Git, Github, Tailwind, Bert, Pytorch, Colab, Json
 ## Authors
 
 - [@Leonardo Paredes](https://github.com/lel20/Unl-newChat)
