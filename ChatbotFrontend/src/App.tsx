@@ -29,7 +29,7 @@ function App() {
   return (
     <>
       <div
-        className={`${visible} h-full w-full md:container bg-[#0c2342]  md:h-[85%] border md:w-[400px] absolute z-20 md:right-10 md:rounded-xl md:mt-2 font-roboto text-sm`}>
+        className={`${visible} h-full w-full md:container bg-[#0c2342]  md:h-[83%] border md:w-[400px] absolute z-20 md:right-10 md:rounded-xl md:mt-2 font-roboto text-sm`}>
         <Head 
           handleClick={handleClick}
         />
